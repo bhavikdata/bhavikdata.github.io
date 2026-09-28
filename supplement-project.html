@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1824">
+  <meta name="description" content="Case study: an Excel sales and inventory analytics dashboard with Python data cleaning, a fact/dimension model and demand forecasting.">
+  <title>Global supplement sales & inventory analytics — Bhavik Sathvara</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1824'/%3E%3Cpath d='M12 45h9V30h-9zm15 0h9V19h-9zm15 0h9V11h-9z' fill='%23cbf268'/%3E%3C/svg%3E">
+  <style>
+:root { color-scheme: dark; --ink:#0a1824; --panel:#102533; --line:#35505a; --text:#f4f6ed; --muted:#bac7c8; --accent:#cbf268; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--ink); color:var(--text); font: 400 1rem/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+a { color:inherit; } a:focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
+.wrap { max-width:1100px; margin:auto; padding-inline:clamp(1.25rem,5vw,4rem); }
+.site-header { border-bottom:1px solid var(--line); }
+.nav { display:flex; align-items:center; justify-content:space-between; min-height:78px; gap:1.5rem; }
+.brand { font-weight:750; letter-spacing:-.045em; font-size:1.2rem; text-decoration:none; white-space:nowrap; }
+.brand span { color:var(--accent); }
+.back { color:var(--muted); text-decoration:none; font-size:.9rem; min-height:44px; display:inline-flex; align-items:center; }
+.back:hover { color:var(--accent); }
+.hero { padding-block:4.5rem 3rem; }
+.badge { display:inline-block; border:1px solid #9ab0ab; padding:.3rem .7rem; border-radius:100px; font-size:.78rem; color:#e6efde; }
+h1 { font-size:clamp(2.6rem,6.5vw,5.4rem); line-height:.98; letter-spacing:-.07em; font-weight:660; margin:1.3rem 0 1.4rem; max-width:17ch; }
+.lead { color:var(--muted); font-size:clamp(1.05rem,1.6vw,1.25rem); max-width:62ch; margin:0; }
+.actions { display:flex; flex-wrap:wrap; gap:.8rem; margin-top:2rem; }
+.btn { display:inline-flex; align-items:center; gap:.7rem; min-height:48px; padding:.8rem 1.2rem; border-radius:3px; font-weight:750; text-decoration:none; background:var(--accent); color:var(--ink); }
+.btn:hover { background:#e2ff9d; }
+.btn.ghost { background:transparent; color:var(--text); border:1px solid var(--line); font-weight:600; }
+.btn.ghost:hover { border-color:var(--accent); color:var(--accent); }
+.facts { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-block:1rem 4rem; }
+.facts div { padding:1.3rem 1.2rem 1.3rem 0; }
+.facts div + div { border-left:1px solid var(--line); padding-left:1.2rem; }
+.facts strong { display:block; font-size:clamp(1.6rem,3vw,2.3rem); letter-spacing:-.05em; color:var(--accent); font-weight:620; line-height:1.1; }
+.facts span { color:var(--muted); font-size:.88rem; }
+.notice { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); padding:1rem 1.2rem; color:var(--muted); font-size:.92rem; margin-bottom:4rem; }
+.block { display:grid; grid-template-columns:minmax(180px,.32fr) 1fr; gap:2rem; padding-block:2.6rem; border-top:1px solid var(--line); }
+.block h2 { margin:0; font-size:1.45rem; letter-spacing:-.04em; font-weight:650; line-height:1.2; }
+.block p { color:var(--muted); margin:0 0 1rem; max-width:65ch; }
+.block ul { margin:0; padding-left:1.1rem; color:var(--muted); max-width:65ch; }
+.block li { margin-bottom:.55rem; } .block li strong { color:var(--text); }
+.steps { list-style:none; margin:0; padding:0; counter-reset:s; }
+.steps li { counter-increment:s; display:grid; grid-template-columns:2.6rem 1fr; gap:.4rem; padding-block:.8rem; border-bottom:1px solid #22404b; color:var(--muted); }
+.steps li::before { content:counter(s,decimal-leading-zero); color:var(--accent); font-weight:700; font-size:.9rem; padding-top:.1rem; }
+.steps li strong { color:var(--text); font-weight:650; }
+.chart { background:var(--panel); border:1px solid var(--line); padding:1.4rem; margin-bottom:1.2rem; }
+.chart h3 { margin:0 0 .25rem; font-size:1.05rem; letter-spacing:-.02em; }
+.chart .sub { color:var(--muted); font-size:.85rem; margin:0 0 1.2rem; }
+.bar { display:grid; grid-template-columns:minmax(120px,11rem) 1fr 4.2rem; align-items:center; gap:.8rem; padding-block:.35rem; font-size:.9rem; }
+.bar .track { height:14px; background:#1b3845; }
+.bar .fill { display:block; height:100%; background:#6f8f8c; }
+.bar.hi .fill { background:var(--accent); }
+.bar.hi .name, .bar.hi .val { color:var(--accent); font-weight:700; }
+.bar .val { text-align:right; font-variant-numeric:tabular-nums; }
+.chart .src { color:var(--muted); font-size:.8rem; margin:1rem 0 0; }
+.tags { display:flex; flex-wrap:wrap; gap:.5rem; }
+.tags span { border:1px solid var(--line); padding:.35rem .75rem; border-radius:100px; font-size:.86rem; }
+.next { display:flex; justify-content:space-between; align-items:center; gap:1.5rem; flex-wrap:wrap; border-top:1px solid var(--line); padding-block:3rem 4rem; margin-top:1rem; }
+.next p { margin:0; color:var(--muted); }
+.next a { font-size:clamp(1.4rem,3vw,2.1rem); letter-spacing:-.045em; font-weight:650; text-decoration:none; }
+.next a:hover { color:var(--accent); }
+footer { border-top:1px solid var(--line); padding-block:1.5rem; color:var(--muted); font-size:.85rem; }
+footer .wrap { display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+footer a { text-decoration:none; } footer a:hover { color:var(--accent); }
+@media (max-width:760px) { .facts { grid-template-columns:repeat(2,minmax(0,1fr)); } .facts div:nth-child(3) { border-left:0; padding-left:0; } .facts div:nth-child(n+3) { border-top:1px solid var(--line); } .block { grid-template-columns:1fr; gap:1rem; } }
+@media (max-width:480px) { .bar { grid-template-columns:1fr 3.8rem; } .bar .name { grid-column:1 / -1; } }
+
+nav a[aria-current="page"] { color:var(--text); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:8px; text-decoration-thickness:2px; }
+nav a.nav-cta { color:var(--ink); background:var(--accent); padding:.6rem .95rem; border-radius:3px; font-weight:750; text-decoration:none; }
+nav a.nav-cta:hover, nav a.nav-cta[aria-current="page"] { color:var(--ink); background:#e2ff9d; }
+nav a { min-height:44px; display:inline-flex; align-items:center; }
+.site-footer { border-top:1px solid var(--line); padding-block:1.5rem; color:var(--muted); font-size:.85rem; }
+.site-footer .wrap { display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+.site-footer nav { gap:1.4rem; } .site-footer nav a { font-size:.85rem; min-height:auto; }
+@media (max-width:540px){ nav { gap:.2rem; } nav a { font-size:.85rem; } nav a.nav-cta { padding:.5rem .7rem; } .site-footer nav { justify-content:flex-start; gap:1.2rem; } }
+.wrap{max-width:1260px;padding-inline:clamp(1.25rem,5vw,5rem)} nav{display:flex;align-items:center;gap:clamp(1rem,3vw,2.4rem)} nav a{font-size:.9rem;color:var(--muted);text-decoration:none} nav a:hover{color:var(--accent)} .crumb{display:inline-flex;min-height:44px;align-items:center;color:var(--muted);text-decoration:none;font-size:.9rem;margin-top:1.5rem} .crumb:hover{color:var(--accent)} .hero{padding-top:1.5rem} @media (max-width:540px){ .nav{min-height:68px;align-items:start;padding-block:1rem;flex-direction:column;gap:.45rem} .nav nav{width:100%;justify-content:space-between;gap:.2rem} .nav nav a{font-size:.85rem} }
+:root { color-scheme: dark; --ink:#0a1824; --panel:#102533; --panel2:#0e202c; --line:#35505a; --text:#f4f6ed; --muted:#bac7c8; --accent:#cbf268; --light:#dce7df; --lightink:#122a30; --lightline:#a7beb5; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:84px; }
+body { margin:0; background:var(--ink); color:var(--text); font:400 1rem/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+a { color:inherit; } :focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+.wrap { max-width:1260px; margin:auto; padding-inline:clamp(1.25rem,5vw,5rem); }
+/* header */
+.site-header { position:sticky; top:0; z-index:10; background:rgba(10,24,36,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+.nav { display:flex; align-items:center; justify-content:space-between; min-height:74px; gap:1.5rem; }
+.brand { font-weight:750; letter-spacing:-.045em; font-size:1.25rem; text-decoration:none; white-space:nowrap; }
+.brand span { color:var(--accent); }
+.menu { display:flex; align-items:center; gap:clamp(1rem,2.6vw,2.2rem); }
+.menu a { font-size:.92rem; color:var(--muted); text-decoration:none; min-height:44px; display:inline-flex; align-items:center; }
+.menu a:hover { color:var(--accent); }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:48px; padding:.8rem 1.25rem; border-radius:4px; font-weight:750; text-decoration:none; background:var(--accent); color:var(--ink); border:1px solid var(--accent); }
+.btn:hover { background:#e2ff9d; border-color:#e2ff9d; }
+.btn.ghost { background:transparent; color:var(--text); border-color:var(--line); font-weight:650; }
+.btn.ghost:hover { border-color:var(--accent); color:var(--accent); }
+.menu .btn { color:var(--ink); min-height:42px; padding:.55rem 1rem; font-size:.9rem; }
+.menu .btn:hover { color:var(--ink); }
+.toggle { display:none; background:none; border:1px solid var(--line); color:var(--text); border-radius:4px; min-height:44px; padding:0 .9rem; font:inherit; font-weight:650; cursor:pointer; }
+@media (max-width:760px) {
+  .toggle { display:inline-flex; align-items:center; }
+  .menu { display:none; position:absolute; left:0; right:0; top:100%; background:var(--ink); border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch; gap:0; padding:.5rem clamp(1.25rem,5vw,5rem) 1.2rem; }
+  .menu.open { display:flex; }
+  .menu a { border-bottom:1px solid #22404b; font-size:1rem; }
+  .menu .btn { margin-top:.9rem; border-bottom:0; }
+}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap} footer .brand{color:var(--text);font-size:1.1rem} footer nav{display:flex;gap:1.3rem} footer nav a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-size:.88rem;color:var(--muted)} footer nav a:hover{color:var(--accent)} .menu{text-decoration:none}</style>
+</head>
+<body>
+  <header class="site-header"><div class="wrap nav">
+  <a class="brand" href="index.html">Bhavik Sathvara<span>.</span></a>
+  <button class="toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+  <nav class="menu" id="menu" aria-label="Main navigation">
+    <a href="index.html#about">About</a><a href="index.html#skills">Skills</a><a href="index.html#projects">Projects</a><a href="index.html#contact">Contact</a>
+    <a class="btn" href="index.html#contact">Hire me</a>
+  </nav></div></header>
+  <main class="wrap"><a class="crumb" href="index.html#projects">← All projects</a>
+    <div class="hero">
+      <span class="badge">Public GitHub project · Retail & supply chain</span>
+      <h1>Global supplement sales &amp; inventory analytics</h1>
+      <p class="lead">A single Excel workbook for NutriGlobal Distribution, a fictional supplement seller operating in 8 countries and 4 sales channels. A non-technical manager can open it, filter it and trust it — every number traces back to a formula.</p>
+      <div class="actions"><a class="btn" href="https://github.com/bhavikdata/Global-Supplement-Analytics" rel="noopener noreferrer">View code on GitHub ↗</a><a class="btn ghost" href="index.html#contact">Send an inquiry</a></div>
+    </div>
+    <div class="facts"><div><strong>54,573</strong><span>order lines</span></div><div><strong>8</strong><span>countries</span></div><div><strong>4</strong><span>sales channels</span></div><div><strong>~55,000</strong><span>live formulas</span></div></div>
+    <p class="notice">All data in this project is synthetic and reproducible (generated with a fixed random seed). Insights and recommendations are simulated for demonstration, not real business results.</p>
+
+    <section class="block"><h2>The problem</h2><div><p>Leadership needed one workbook that answers four questions:</p><ul><li>How are revenue and margin trending, and which categories, regions and channels drive them?</li><li>How does demand change month to month with seasonality and promotions?</li><li>Which products run out of stock most often, and where should replenishment focus?</li><li>How well can a simple, explainable model forecast next month’s demand?</li></ul></div></section>
+    <section class="block"><h2>What I built</h2><ol class="steps"><li><span><strong>Generated messy raw extracts.</strong> Sales, products, inventory and geography files with realistic problems built in.</span></li><li><span><strong>Cleaned the data in Python.</strong> Removed duplicates, fixed invalid dates, standardised country names, filled missing categories and recalculated inventory balances — every fix logged on a Data Quality sheet.</span></li><li><span><strong>Modelled it in two layers.</strong> Normalised fact and dimension tables, plus a denormalised reporting layer so the dashboard stays fast.</span></li><li><span><strong>Built the dashboard.</strong> KPI cards driven by SUMIFS, Year and Category dropdown filters, 8 native charts and conditional formatting across 17 sheets.</span></li><li><span><strong>Forecast demand.</strong> A transparent seasonal-naive baseline evaluated on a 3-month holdout with MAE, RMSE and WAPE.</span></li><li><span><strong>Verified every KPI.</strong> Recomputed each headline figure independently in Python and reconciled it against the workbook.</span></li></ol></section>
+    <section class="block"><h2>Results</h2><div><figure class="chart" style="margin-inline:0"><h3>Stockout rate by category</h3><p class="sub">Share of product-country-months that ran out of stock, 2024–2025.</p>
+<div class="bar hi"><span class="name">Protein</span><span class="track" aria-hidden="true"><span class="fill" style="width:95.8%"></span></span><span class="val">43.10%</span></div>
+<div class="bar"><span class="name">Wellness</span><span class="track" aria-hidden="true"><span class="fill" style="width:17.8%"></span></span><span class="val">7.99%</span></div>
+<div class="bar"><span class="name">Sports Nutrition</span><span class="track" aria-hidden="true"><span class="fill" style="width:13.3%"></span></span><span class="val">5.99%</span></div>
+<p class="src">Source: repository README, calculated from the synthetic dataset.</p></figure><figure class="chart" style="margin-inline:0"><h3>Gross margin by category</h3><p class="sub">Gross profit as a share of revenue.</p>
+<div class="bar"><span class="name">Sports Nutrition</span><span class="track" aria-hidden="true"><span class="fill" style="width:97.0%"></span></span><span class="val">63.02%</span></div>
+<div class="bar"><span class="name">Vitamins</span><span class="track" aria-hidden="true"><span class="fill" style="width:93.8%"></span></span><span class="val">60.99%</span></div>
+<div class="bar"><span class="name">Wellness</span><span class="track" aria-hidden="true"><span class="fill" style="width:78.9%"></span></span><span class="val">51.31%</span></div>
+<div class="bar hi"><span class="name">Protein</span><span class="track" aria-hidden="true"><span class="fill" style="width:78.6%"></span></span><span class="val">51.08%</span></div>
+<p class="src">Source: repository README, calculated from the synthetic dataset.</p></figure><p>Protein is the riskiest category: it has the highest stockout rate and the thinnest margin, so it has the least cushion to absorb lost sales.</p></div></section>
+    <section class="block"><h2>Key findings</h2><ul><li>Revenue grew from <strong>$4.68M in 2024 to $8.89M in 2025</strong> (+89.8%), with the clearest peaks in April and December — the place to concentrate stock build-up and marketing.</li><li>Protein earned the most revenue (<strong>$5.16M</strong>) yet Whey Protein Vanilla ran out of stock <strong>65%</strong> of the time — raise reorder points for the two whey products specifically, not across the board.</li><li>B2C channels brought in <strong>$7.45M vs $6.13M</strong> for B2B, and Online Retail alone <strong>$4.73M</strong> — a good leading signal for company-wide replenishment.</li><li>The seasonal-naive forecast scored <strong>58.5% accuracy</strong> on the holdout. That’s an honest result: a same-month-last-year model can’t keep up with 90% growth.</li></ul></section>
+    <section class="block"><h2>What I’d improve next</h2><ul><li>Add a trend adjustment on top of the seasonal-naive forecast</li><li>Model supplier lead-time variability and a demand-based safety stock formula</li><li>Add native PivotTables and slicers built in desktop Excel</li><li>Build a Power BI or Streamlit view of the same data</li></ul></section>
+    <section class="block"><h2>Tools</h2><div class="tags"><span>Excel</span><span>SUMIFS & COUNTIFS</span><span>Excel Tables</span><span>Data validation</span><span>Conditional formatting</span><span>VBA</span><span>Python</span><span>pandas</span><span>NumPy</span><span>openpyxl</span><span>Forecasting</span></div></section>
+
+    <div class="next"><p>Next project</p><a href="healthcare-project.html">Healthcare demand forecasting →</a></div>
+  </main>
+  <footer><div class="wrap"><a class="brand" href="index.html">Bhavik Sathvara<span>.</span></a><span>© <span class="yr">2026</span> Bhavik Sathvara · Data Analyst</span>
+<nav aria-label="Profiles"><a href="https://www.linkedin.com/in/bhavik-sathvara/" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/bhavikdata" rel="noopener noreferrer">GitHub</a><a href="mailto:bsathvara09@gmail.com">Email</a></nav></div></footer><script>(function(){var b=document.querySelector('.toggle'),m=document.getElementById('menu');if(!b)return;
+b.addEventListener('click',function(){var o=m.classList.toggle('open');b.setAttribute('aria-expanded',o);b.textContent=o?'Close':'Menu';});
+m.addEventListener('click',function(e){if(e.target.closest('a')){m.classList.remove('open');b.setAttribute('aria-expanded','false');b.textContent='Menu';}});})();
+document.querySelectorAll('.yr').forEach(function(e){e.textContent=new Date().getFullYear()});</script>
+</body>
+</html>
