@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a1824">
-  <meta name="description" content="Case study: an end-to-end healthcare demand forecasting and inventory optimisation platform built with Python, SQL and machine learning.">
-  <title>Healthcare demand forecasting — Bhavik Sathvara</title>
+  <meta name="description" content="Case study: cleaning biometric and RFID access data, flagging suspicious entries and building Power BI dashboards for a security operations team.">
+  <title>Access control analytics — Bhavik Sathvara</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1824'/%3E%3Cpath d='M12 45h9V30h-9zm15 0h9V19h-9zm15 0h9V11h-9z' fill='%23cbf268'/%3E%3C/svg%3E">
   <script>document.documentElement.classList.add('js')</script><style>
 :root { color-scheme: dark; --ink:#0a1824; --panel:#102533; --line:#35505a; --text:#f4f6ed; --muted:#bac7c8; --accent:#cbf268; }
@@ -74,6 +74,19 @@ nav a { min-height:44px; display:inline-flex; align-items:center; }
 .site-footer nav { gap:1.4rem; } .site-footer nav a { font-size:.85rem; min-height:auto; }
 @media (max-width:540px){ nav { gap:.2rem; } nav a { font-size:.85rem; } nav a.nav-cta { padding:.5rem .7rem; } .site-footer nav { justify-content:flex-start; gap:1.2rem; } }
 .wrap{max-width:1260px;padding-inline:clamp(1.25rem,5vw,5rem)} nav{display:flex;align-items:center;gap:clamp(1rem,3vw,2.4rem)} nav a{font-size:.9rem;color:var(--muted);text-decoration:none} nav a:hover{color:var(--accent)} .crumb{display:inline-flex;min-height:44px;align-items:center;color:var(--muted);text-decoration:none;font-size:.9rem;margin-top:1.5rem} .crumb:hover{color:var(--accent)} .hero{padding-top:1.5rem} @media (max-width:540px){ .nav{min-height:68px;align-items:start;padding-block:1rem;flex-direction:column;gap:.45rem} .nav nav{width:100%;justify-content:space-between;gap:.2rem} .nav nav a{font-size:.85rem} }
+.diagram-fig { margin:1.8rem 0 0; }
+.diagram { background:var(--ink); border:1px solid var(--line); border-radius:14px; padding:1rem; overflow-x:auto; }
+.diagram svg { display:block; width:100%; min-width:560px; height:auto; }
+.diagram-fig figcaption { color:var(--muted); font-size:.85rem; margin-top:.7rem; }
+.checks { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin-top:.6rem; }
+.check { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:1.1rem 1.2rem; transition:transform .35s cubic-bezier(.22,.61,.36,1), border-color .35s; }
+.check:hover { transform:translateY(-4px); border-color:rgba(203,242,104,.55); }
+.check h3 { margin:0 0 .35rem; font-size:1rem; letter-spacing:-.02em; color:var(--text); }
+.check p { margin:0 !important; font-size:.9rem; }
+.src { color:var(--muted); font-size:.8rem; }
+@media (max-width:1000px) { .checks { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:560px) { .checks { grid-template-columns:1fr; } }
+
 :root { color-scheme: dark; --ink:#0a1824; --panel:#102533; --panel2:#0e202c; --line:#35505a; --text:#f4f6ed; --muted:#bac7c8; --accent:#cbf268; --light:#dce7df; --lightink:#122a30; --lightline:#a7beb5; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; scroll-padding-top:84px; }
@@ -166,28 +179,58 @@ html, body { overflow-x:clip; }
   </nav></div></header>
   <main class="wrap"><a class="crumb" href="index.html#projects">← All projects</a>
     <div class="hero">
-      <span class="badge">Public GitHub project · Healthcare</span>
-      <h1>Healthcare demand forecasting &amp; inventory optimisation</h1>
-      <p class="lead">An end-to-end analytics platform for HealthNova Global, a fictional healthcare and nutritional-products distributor. It takes raw data all the way to forecasts, reorder recommendations and an executive dashboard — and the whole pipeline runs from a clean clone in under two minutes.</p>
-      <div class="actions"><a class="btn" href="https://github.com/bhavikdata/healthcare-demand-forecasting" rel="noopener noreferrer">View code on GitHub ↗</a><a class="btn ghost" href="index.html#contact">Send an inquiry</a></div>
+      <span class="badge">Confidential client work · Security operations</span>
+      <h1>Access control analytics for biometric and RFID security</h1>
+      <p class="lead">A security operations team had hundreds of access devices producing tens of thousands of entries a day, but no reliable way to see which of them mattered. I cleaned and joined the device data, built checks that flag suspicious access patterns, and gave the team Power BI dashboards they could act on.</p>
+      <div class="actions"><a class="btn" href="index.html#contact">Ask me about this project</a><a class="btn ghost" href="healthcare-project.html">See a public project</a></div>
     </div>
-    <div class="facts"><div><strong>~180K</strong><span>transactions</span></div><div><strong>180</strong><span>products</span></div><div><strong>25</strong><span>countries</span></div><div><strong>2.5 yrs</strong><span>of daily history</span></div></div>
-    <p class="notice">All data in this project is synthetic, generated with realistic seasonality, promotions, price elasticity and stockouts. No real company or customer data is used, and the business impact figures are simulated.</p>
+    <div class="facts"><div><strong>450</strong><span>biometric devices &amp; RFID gates</span></div><div><strong>76K</strong><span>entries per day</span></div><div><strong>45K+</strong><span>registered users</span></div><div><strong>1,200+</strong><span>anomalies flagged a month</span></div></div>
+    <p class="notice">This was client work under confidentiality, so there is no public code or data. The client, sites and people are not named, and the screenshots are not shown. The figures below are the outcomes reported during the engagement.</p>
 
-    <section class="block"><h2>The problem</h2><div><p>Like many fast-growing distributors, the business struggled to plan stock and see what was really driving profit:</p><ul><li>Stockouts on fast-moving products and excess stock on slow movers</li><li>Seasonal demand swings that spreadsheet planning kept missing</li><li>No single view of which products, regions and customers drive profit</li><li>Slow manual reporting and no forward-looking demand signal for purchasing</li></ul></div></section>
-    <section class="block"><h2>What I built</h2><ol class="steps"><li><span><strong>Generated realistic data.</strong> Built a synthetic dataset where promotions lift demand, stockouts suppress sales and each product follows a growth, stable or declining trend.</span></li><li><span><strong>Added a data quality gate.</strong> Every run is graded PASS, WARNING or FAIL before anything downstream uses it.</span></li><li><span><strong>Designed a star schema.</strong> Fact tables for sales, inventory and returns with product, customer, warehouse, country, date and promotion dimensions — Snowflake-ready DDL included.</span></li><li><span><strong>Engineered features safely.</strong> Lag and rolling features with an explicit test that no future data leaks into training.</span></li><li><span><strong>Compared five forecasting models.</strong> Naive, moving average, linear regression, random forest and gradient boosting on a strict time-based holdout; the lowest-WAPE model is picked automatically.</span></li><li><span><strong>Turned forecasts into actions.</strong> Safety stock and reorder points per product and warehouse, each tagged Critical, High, Medium or Low risk.</span></li><li><span><strong>Segmented customers and flagged anomalies.</strong> RFM rules compared against K-Means, plus z-score, IQR and Isolation Forest anomaly detection.</span></li><li><span><strong>Presented it.</strong> An eight-page Streamlit dashboard, 25 documented SQL queries, and a Power BI guide with 20+ DAX measures.</span></li></ol></section>
-    <section class="block"><h2>Results</h2><div><figure class="chart" style="margin-inline:0"><h3>Forecast error by model (WAPE, lower is better)</h3><p class="sub">Measured on a time-based holdout the models never saw during training.</p>
-<div class="bar hi"><span class="name">Random Forest</span><span class="track" aria-hidden="true"><span class="fill" style="width:53.9%"></span></span><span class="val">17.25%</span></div>
-<div class="bar"><span class="name">Gradient Boosting</span><span class="track" aria-hidden="true"><span class="fill" style="width:59.8%"></span></span><span class="val">19.13%</span></div>
-<div class="bar"><span class="name">Linear Regression</span><span class="track" aria-hidden="true"><span class="fill" style="width:70.3%"></span></span><span class="val">22.51%</span></div>
-<div class="bar"><span class="name">Moving average (7d)</span><span class="track" aria-hidden="true"><span class="fill" style="width:86.2%"></span></span><span class="val">27.59%</span></div>
-<div class="bar"><span class="name">Naive (lag-1)</span><span class="track" aria-hidden="true"><span class="fill" style="width:95.7%"></span></span><span class="val">30.62%</span></div>
-<p class="src">Source: model results in the repository, reproducible with a fixed random seed.</p></figure><p>Random Forest was selected, cutting weighted error from 30.6% to 17.25% — about a 44% relative improvement over a “repeat yesterday” forecast. I used WAPE rather than MAPE because many individual days have near-zero demand, which distorts MAPE.</p></div></section>
-    <section class="block"><h2>Key findings</h2><ul><li>The top 10 products bring in roughly <strong>64% of revenue</strong>, so a small core of the 180-product catalogue drives most of the value.</li><li><strong>Immune Support and Pain Relief peak in winter</strong> while Sports Nutrition peaks in summer — flat planning would understock both, in opposite seasons.</li><li>Revenue <strong>per transaction is lower during promotions</strong>, a reminder to measure promotion success by extra volume, not order value.</li><li>The overall stockout rate is about <strong>3%</strong>, concentrated in a specific list of Critical and High-risk products rather than spread across the catalogue.</li></ul></section>
-    <section class="block"><h2>What I’d improve next</h2><ul><li>Reconcile category forecasts down to product level as more history builds up</li><li>Add Prophet or SARIMA for the strongly seasonal categories</li><li>Run the quality gate in an orchestrator such as Airflow, with alerts on FAIL</li><li>Add a proper per-country holiday calendar</li></ul></section>
-    <section class="block"><h2>Tools</h2><div class="tags"><span>Python</span><span>pandas</span><span>NumPy</span><span>SQL</span><span>Star schema</span><span>Snowflake</span><span>scikit-learn</span><span>Streamlit</span><span>Plotly</span><span>Power BI</span><span>DAX</span><span>Azure</span><span>pytest</span><span>GitHub Actions</span></div></section>
+    <section class="block"><h2>The problem</h2><div><p>The team had plenty of data but no reliable way to act on it:</p><ul><li>Access logs came from many device types and sites, with inconsistent formats, duplicate swipes and gaps when devices went offline</li><li>Security staff reviewed logs manually, so unusual access was often spotted days later, if at all</li><li>There was no single view of who was entering where and when, across all gates</li><li>Reporting to management was slow and had to be rebuilt by hand each cycle</li></ul></div></section>
+    <section class="block"><h2>What I built</h2><div><ol class="steps"><li><span><strong>Brought the data together.</strong> Extracted entry logs from biometric terminals and RFID gates with SQL and Python, and joined them to user, device and location reference data.</span></li><li><span><strong>Cleaned and validated it.</strong> Removed duplicate reads, standardised timestamps and device IDs, handled missing values and flagged devices with gaps in their logs, which improved data quality by 20%.</span></li><li><span><strong>Defined what “unusual” means.</strong> Worked with the security team to turn their concerns into rules, then added statistical checks on each user’s normal pattern to catch what fixed rules miss.</span></li><li><span><strong>Flagged anomalies automatically.</strong> Every entry is checked against those rules and patterns, and suspicious events are grouped for review instead of left in the raw log.</span></li><li><span><strong>Built the dashboards.</strong> Power BI reports for daily monitoring, anomaly review and device health, replacing the manual reporting cycle.</span></li></ol><figure class="diagram-fig"><div class="diagram"><svg viewBox="0 0 720 190" role="img" aria-labelledby="pipeTitle pipeDesc">
+        <title id="pipeTitle">Access data pipeline</title>
+        <desc id="pipeDesc">Entry logs from biometric devices and RFID gates flow into extraction with SQL and Python, then cleaning and validation, then anomaly detection, then Power BI dashboards for the security team.</desc>
+        <defs>
+          <marker id="acc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#6c8185"/>
+          </marker>
+        </defs>
+        <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" text-anchor="middle">
+          <rect x="6" y="30" width="118" height="46" rx="8" fill="#0a1824" stroke="#35505a"/>
+          <text x="65" y="51" fill="#f4f6ed" font-size="13" font-weight="600">Biometric</text>
+          <text x="65" y="67" fill="#bac7c8" font-size="11">terminals</text>
+          <rect x="6" y="104" width="118" height="46" rx="8" fill="#0a1824" stroke="#35505a"/>
+          <text x="65" y="125" fill="#f4f6ed" font-size="13" font-weight="600">RFID gates</text>
+          <text x="65" y="141" fill="#bac7c8" font-size="11">entry logs</text>
 
-    <div class="next"><p>Next project</p><a href="supplement-project.html">Global supplement analytics →</a></div>
+          <path d="M124 53 C 140 53, 140 90, 150 90" fill="none" stroke="#6c8185" stroke-width="1.5"/>
+          <path d="M124 127 C 140 127, 140 90, 150 90" fill="none" stroke="#6c8185" stroke-width="1.5" marker-end="url(#acc-arrow)"/>
+          <rect x="158" y="64" width="118" height="52" rx="8" fill="#102533" stroke="#6c8185"/>
+          <text x="217" y="87" fill="#f4f6ed" font-size="13" font-weight="600">Extract</text>
+          <text x="217" y="103" fill="#bac7c8" font-size="11">SQL · Python</text>
+          <line x1="276" y1="90" x2="298" y2="90" stroke="#6c8185" stroke-width="1.5" marker-end="url(#acc-arrow)"/>
+          <rect x="302" y="64" width="118" height="52" rx="8" fill="#102533" stroke="#6c8185"/>
+          <text x="361" y="87" fill="#f4f6ed" font-size="13" font-weight="600">Clean &amp; validate</text>
+          <text x="361" y="103" fill="#bac7c8" font-size="11">dedupe · standardise</text>
+          <line x1="420" y1="90" x2="442" y2="90" stroke="#6c8185" stroke-width="1.5" marker-end="url(#acc-arrow)"/>
+          <rect x="446" y="64" width="118" height="52" rx="8" fill="#102533" stroke="#cbf268"/>
+          <text x="505" y="87" fill="#f4f6ed" font-size="13" font-weight="600">Detect</text>
+          <text x="505" y="103" fill="#bac7c8" font-size="11">rules · patterns</text>
+          <line x1="564" y1="90" x2="586" y2="90" stroke="#6c8185" stroke-width="1.5" marker-end="url(#acc-arrow)"/>
+          <rect x="590" y="64" width="124" height="52" rx="8" fill="#102533" stroke="#6c8185"/>
+          <text x="652" y="87" fill="#f4f6ed" font-size="13" font-weight="600">Power BI</text>
+          <text x="652" y="103" fill="#bac7c8" font-size="11">security team</text>
+          <text x="217" y="140" fill="#bac7c8" font-size="11">76K entries / day</text>
+          <text x="505" y="140" fill="#cbf268" font-size="11">1,200+ flags / month</text>
+        </g>
+      </svg></div><figcaption>How the data moved from devices to the security team. Lime marks the step where anomalies are raised.</figcaption></figure></div></section><section class="block"><h2>What the checks looked for</h2><div><p>Each flag had a plain reason attached, so reviewers could see why an entry was raised without reading the underlying query.</p><div class="checks"><div class="check"><h3>Out-of-hours access</h3><p>Entries well outside a user’s usual times or the site’s operating hours.</p></div><div class="check"><h3>Repeated failed attempts</h3><p>Several rejected biometric or card reads in a short window at one device.</p></div><div class="check"><h3>Impossible sequences</h3><p>Entries at gates too far apart to reach in the time between them, or an entry with no matching exit.</p></div><div class="check"><h3>Restricted areas</h3><p>Access attempts to zones outside a user’s normal pattern or permission group.</p></div><div class="check"><h3>Device health</h3><p>Devices that went silent or suddenly logged far more or fewer entries than usual.</p></div><div class="check"><h3>Unusual volume</h3><p>Spikes or drops at a gate compared with the same hour on comparable days.</p></div></div></div></section>
+    <section class="block"><h2>Results</h2><div><figure class="chart" style="margin-inline:0"><h3>Improvement after go-live</h3><p class="sub">Changes reported after the dashboards and checks went live.</p><div class="bar hi"><span class="name">Reporting efficiency</span><span class="track" aria-hidden="true"><span class="fill" style="width:85.7%"></span></span><span class="val">+30%</span></div><div class="bar"><span class="name">Data quality</span><span class="track" aria-hidden="true"><span class="fill" style="width:57.1%"></span></span><span class="val">+20%</span></div><div class="bar"><span class="name">Security breaches</span><span class="track" aria-hidden="true"><span class="fill" style="width:42.9%"></span></span><span class="val">−15%</span></div><p class="src">Source: outcomes reported during the client engagement.</p></figure><p>At 76,000 entries a day, a month holds roughly 2.3 million entries. About 1,200 flags a month means around one entry in every 1,900 needed a closer look — a volume a small team can realistically review instead of scanning the whole log.</p></div></section>
+    <section class="block"><h2>Key findings</h2><ul><li>A large share of the noise came from <strong>device and data issues</strong>, not people. Cleaning the data first stopped duplicate reads and offline gaps from being raised as security events.</li><li>Rules alone missed behaviour that was only unusual <strong>for that particular user</strong>, so comparing each person against their own normal pattern mattered.</li><li>Giving every flag a <strong>plain-language reason</strong> made the security team far more willing to trust and act on the alerts.</li></ul></section>
+    <section class="block"><h2>What I’d improve next</h2><ul><li>Score each flag by risk so the most serious events are reviewed first</li><li>Feed reviewer decisions back in, so rules that mostly raise false alarms can be tuned</li><li>Move from daily batches to near real-time alerts for the highest-risk checks</li><li>Add predictive maintenance for devices that show early signs of failing</li></ul></section>
+    <section class="block"><h2>Tools</h2><div class="tags"><span>Python</span><span>pandas</span><span>NumPy</span><span>SQL</span><span>Power BI</span><span>DAX</span><span>Power Query</span><span>Anomaly detection</span><span>Data validation</span></div></section>
+
+    <div class="next"><p>Next project</p><a href="healthcare-project.html">Healthcare demand forecasting →</a></div>
   </main>
   <footer><div class="wrap"><a class="brand" href="index.html">Bhavik Sathvara</a><span>© <span class="yr">2026</span> Bhavik Sathvara · Data Analyst</span>
 <nav aria-label="Profiles"><a href="https://www.linkedin.com/in/bhavik-sathvara/" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/bhavikdata" rel="noopener noreferrer">GitHub</a><a href="mailto:bsathvara09@gmail.com">Email</a></nav></div></footer><script>(function(){var b=document.querySelector('.toggle'),m=document.getElementById('menu');if(!b)return;

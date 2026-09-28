@@ -7,7 +7,7 @@
   <meta name="description" content="Your inquiry was sent.">
   <title>Inquiry sent | Bhavik Sathvara</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1824'/%3E%3Cpath d='M12 45h9V30h-9zm15 0h9V19h-9zm15 0h9V11h-9z' fill='%23cbf268'/%3E%3C/svg%3E">
-  <style>
+  <script>document.documentElement.classList.add('js')</script><style>
 :root { color-scheme: dark; --ink:#0a1824; --panel:#102533; --panel2:#0e202c; --line:#35505a; --text:#f4f6ed; --muted:#bac7c8; --accent:#cbf268; --light:#dce7df; --lightink:#122a30; --lightline:#a7beb5; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; scroll-padding-top:84px; }
@@ -71,7 +71,7 @@ a { color:inherit; } :focus-visible { outline:3px solid var(--accent); outline-o
 .tags { display:flex; flex-wrap:wrap; gap:.45rem; }
 .tags span { border:1px solid var(--line); padding:.3rem .7rem; border-radius:100px; font-size:.84rem; color:#dfe7e2; }
 /* projects */
-.project-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.2rem; }
+.project-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.2rem; }
 .project { background:var(--panel); border:1px solid var(--line); display:flex; flex-direction:column; }
 .project-top { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; padding:1.5rem 1.5rem 0; }
 .project-top .ic { width:52px; height:52px; display:grid; place-items:center; background:var(--ink); border:1px solid var(--line); color:var(--accent); flex:none; }
@@ -88,24 +88,27 @@ a { color:inherit; } :focus-visible { outline:3px solid var(--accent); outline-o
 .project-foot a { color:var(--accent); font-weight:700; text-underline-offset:4px; min-height:44px; display:inline-flex; align-items:center; }
 .project-foot a:hover { color:#e2ff9d; }
 .project-foot em { color:var(--muted); font-style:normal; font-size:.85rem; }
-/* about */
-.about { background:var(--light); color:var(--lightink); border-top:0; }
-.about .label { color:#345f53; }
-.about-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(2rem,7vw,7rem); }
-.about-bio p { font-size:1.08rem; color:#34535a; max-width:54ch; }
-.about-bio p:first-of-type { font-size:clamp(1.3rem,2.2vw,1.7rem); color:var(--lightink); letter-spacing:-.03em; line-height:1.4; }
-.about-bio strong { color:var(--lightink); }
-.traits { display:grid; gap:0; border-top:1px solid var(--lightline); }
-.trait { display:grid; grid-template-columns:44px 1fr; gap:1rem; padding-block:1.1rem; border-bottom:1px solid var(--lightline); }
-.trait .ic { color:#345f53; }
-.trait h3 { margin:0 0 .2rem; font-size:1.05rem; letter-spacing:-.02em; }
-.trait p { margin:0; color:#34535a; font-size:.95rem; }
-.facts { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:2rem; }
-.facts div { border:1px solid var(--lightline); padding:1rem 1.1rem; }
-.facts dt { font-size:.85rem; color:#34535a; } .facts dd { margin:.2rem 0 0; font-weight:650; }
-.industries { margin-top:1.8rem; }
-.industries h3 { font-size:.95rem; margin:0 0 .7rem; }
-.industries .tags span { border-color:#8baaa0; color:var(--lightink); }
+/* about (dark, same as every other section) */
+.about-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(2rem,6vw,5rem); align-items:start; }
+.about-bio > p { font-size:1.05rem; color:var(--muted); max-width:58ch; margin:0 0 1.1rem; }
+.about-bio strong { color:var(--text); }
+.traits { display:grid; gap:.9rem; margin-top:2rem; }
+.trait { display:grid; grid-template-columns:52px 1fr; gap:1rem; align-items:center; background:var(--panel); border:1px solid var(--line); padding:1rem 1.1rem; }
+.trait .ic { width:48px; height:48px; display:grid; place-items:center; background:var(--ink); border:1px solid var(--line); }
+.trait h3 { margin:0 0 .15rem; font-size:1.02rem; letter-spacing:-.02em; }
+.trait p { margin:0; color:var(--muted); font-size:.92rem; }
+.about-side { display:grid; gap:1.2rem; }
+.card-box { background:var(--panel); border:1px solid var(--line); padding:1.6rem; }
+.card-box h3 { margin:0 0 1.2rem; font-size:1.15rem; letter-spacing:-.03em; }
+.prof { margin-bottom:1.1rem; } .prof:last-child { margin-bottom:0; }
+.prof-row { display:flex; justify-content:space-between; font-size:.92rem; margin-bottom:.45rem; }
+.prof-row span:last-child { color:var(--accent); font-weight:700; font-variant-numeric:tabular-nums; }
+.prof-track { height:8px; background:var(--ink); border:1px solid var(--line); border-radius:100px; overflow:hidden; }
+.prof-track i { display:block; height:100%; background:var(--accent); border-radius:100px; }
+.tags.ind span { font-size:.9rem; padding:.4rem .8rem; }
+.emoji { font-size:1.45rem; line-height:1; }
+.skill-card .ic { width:52px; height:52px; display:grid; place-items:center; background:var(--ink); border:1px solid var(--line); }
+.links .ic { width:48px; height:48px; background:var(--ink); border:1px solid var(--line); }
 /* contact */
 .contact-layout { padding-block:0; }
 .side h3 { font-size:1.35rem; letter-spacing:-.03em; margin:1.8rem 0 .5rem; }
@@ -125,22 +128,95 @@ footer nav { display:flex; gap:1.3rem; } footer nav a { text-decoration:none; mi
 @media (max-width:860px) { .hero { grid-template-columns:1fr; padding-block:3.5rem 4rem; } .hero-aside { display:none; } .about-grid { grid-template-columns:1fr; } }
 @media (max-width:620px) { .skill-grid, .project-grid, .facts { grid-template-columns:1fr; } .stats { display:grid; grid-template-columns:repeat(3,1fr); } .stats div { padding-right:.8rem; margin-right:.8rem; } .stats span { font-size:.8rem; display:block; line-height:1.3; } .section { padding-block:4.5rem; } }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+
+/* ---- smooth motion & polish ---- */
+:root { --r:14px; --ease:cubic-bezier(.22,.61,.36,1); }
+.skill-card, .project, .trait, .card-box, .form-panel, .links a, .chart, .notice, .status-pill, .facts { border-radius:var(--r); }
+.project { overflow:hidden; }
+.trait .ic, .skill-card .ic, .project-top .ic, .links .ic { border-radius:12px; }
+.btn, .toggle { border-radius:10px; }
+.field input, .field select, .field textarea { border-radius:10px; transition:border-color .25s var(--ease), box-shadow .25s var(--ease); }
+.field input:focus, .field select:focus, .field textarea:focus { box-shadow:0 0 0 4px rgba(203,242,104,.15); }
+.submit { border-radius:10px; transition:transform .25s var(--ease), background .25s var(--ease), box-shadow .25s var(--ease); }
+.submit:hover { transform:translateY(-2px); box-shadow:0 10px 24px -10px rgba(203,242,104,.6); }
+a, .menu a, footer nav a { transition:color .25s var(--ease); }
+.btn { transition:transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease); }
+.btn:hover { transform:translateY(-2px); box-shadow:0 12px 28px -12px rgba(203,242,104,.55); }
+.btn.ghost:hover { box-shadow:none; }
+.skill-card, .project, .trait, .card-box, .links a { transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease); }
+.skill-card:hover, .project:hover, .card-box:hover, .links a:hover { transform:translateY(-6px); border-color:rgba(203,242,104,.55); box-shadow:0 22px 44px -24px rgba(0,0,0,.8), 0 0 0 1px rgba(203,242,104,.12); }
+.trait:hover { transform:translateX(6px); border-color:rgba(203,242,104,.55); }
+.skill-card .ic, .project-top .ic, .trait .ic { transition:transform .35s var(--ease); }
+.skill-card:hover .ic, .project:hover .project-top .ic, .trait:hover .ic { transform:scale(1.08) rotate(-4deg); }
+.tags span { transition:border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease); }
+.tags span:hover { border-color:var(--accent); color:var(--accent); background:rgba(203,242,104,.06); }
+.project-foot a { transition:color .25s var(--ease), gap .25s var(--ease); }
+/* header: shadow once you scroll, underline slides in on the section you're viewing */
+.site-header { transition:box-shadow .3s var(--ease), background .3s var(--ease); }
+.site-header.scrolled { box-shadow:0 10px 30px -18px rgba(0,0,0,.9); background:rgba(10,24,36,.97); }
+.menu a:not(.btn) { position:relative; }
+.menu a:not(.btn)::after { content:""; position:absolute; left:0; right:0; bottom:8px; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease); }
+.menu a:not(.btn):hover::after, .menu a.active::after { transform:scaleX(1); }
+.menu a.active { color:var(--text); }
+@media (max-width:760px) { .menu a:not(.btn)::after { display:none; } .menu { transition:opacity .25s var(--ease); } }
+/* hero glow and pulsing status dot */
+.hero { position:relative; }
+.hero::before { content:""; position:absolute; z-index:-1; width:620px; height:620px; left:-220px; top:-160px; background:radial-gradient(circle, rgba(203,242,104,.10), transparent 62%); pointer-events:none; }
+html, body { overflow-x:clip; }
+.status-pill i { animation:pulse 2.2s ease-out infinite; }
+@keyframes pulse { 0% { box-shadow:0 0 0 0 rgba(203,242,104,.55); } 70% { box-shadow:0 0 0 10px rgba(203,242,104,0); } 100% { box-shadow:0 0 0 0 rgba(203,242,104,0); } }
+.mini-chart i { transform-origin:bottom; }
+.js .mini-chart i { animation:grow .9s var(--ease) both; }
+.mini-chart i:nth-child(2){animation-delay:.08s}.mini-chart i:nth-child(3){animation-delay:.16s}.mini-chart i:nth-child(4){animation-delay:.24s}.mini-chart i:nth-child(5){animation-delay:.32s}.mini-chart i:nth-child(6){animation-delay:.4s}.mini-chart i:nth-child(7){animation-delay:.48s}
+@keyframes grow { from { transform:scaleY(0); } to { transform:scaleY(1); } }
+/* reveal on scroll */
+.js :is(.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice):not(.in) { opacity:0; transform:translateY(26px); }
+.js :is(.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice) { transition:opacity .8s var(--ease) var(--d,0s), transform .8s var(--ease) var(--d,0s), border-color .35s var(--ease), box-shadow .35s var(--ease); }
+/* proficiency + chart bars fill when visible */
+.prof-track i, .bar .fill { transform-origin:left; transition:transform 1.3s var(--ease) var(--d,0s); }
+.js .card-box:not(.in) .prof-track i, .js .chart:not(.in) .bar .fill { transform:scaleX(0); }
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation:none !important; transition:none !important; }
+  .js :is(.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice):not(.in) { opacity:1; transform:none; }
+  .js .card-box:not(.in) .prof-track i, .js .chart:not(.in) .bar .fill { transform:none; }
+}
 </style>
 </head>
 <body>
 <header class="site-header"><div class="wrap nav">
-  <a class="brand" href="index.html">Bhavik Sathvara<span>.</span></a>
+  <a class="brand" href="index.html">Bhavik Sathvara</a>
   <button class="toggle" aria-expanded="false" aria-controls="menu">Menu</button>
   <nav class="menu" id="menu" aria-label="Main navigation">
     <a href="index.html#about">About</a><a href="index.html#skills">Skills</a><a href="index.html#projects">Projects</a><a href="index.html#contact">Contact</a>
     <a class="btn" href="index.html#contact">Hire me</a>
   </nav></div></header>
 <main id="top"><div class="wrap hero" style="grid-template-columns:1fr;min-height:60vh"><div><span class="status-pill"><i></i>Message received</span><h1>Inquiry sent.</h1><p class="intro">Thanks for getting in touch. I’ll reply within two working days.</p><div class="actions" style="margin-top:2rem"><a class="btn" href="index.html#projects">Browse projects</a><a class="btn ghost" href="index.html">Back to home</a></div></div></div></main>
-<footer><div class="wrap"><a class="brand" href="index.html">Bhavik Sathvara<span>.</span></a><span>© <span class="yr">2026</span> Bhavik Sathvara · Data Analyst</span>
+<footer><div class="wrap"><a class="brand" href="index.html">Bhavik Sathvara</a><span>© <span class="yr">2026</span> Bhavik Sathvara · Data Analyst</span>
 <nav aria-label="Profiles"><a href="https://www.linkedin.com/in/bhavik-sathvara/" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/bhavikdata" rel="noopener noreferrer">GitHub</a><a href="mailto:bsathvara09@gmail.com">Email</a></nav></div></footer>
 <script>(function(){var b=document.querySelector('.toggle'),m=document.getElementById('menu');if(!b)return;
 b.addEventListener('click',function(){var o=m.classList.toggle('open');b.setAttribute('aria-expanded',o);b.textContent=o?'Close':'Menu';});
 m.addEventListener('click',function(e){if(e.target.closest('a')){m.classList.remove('open');b.setAttribute('aria-expanded','false');b.textContent='Menu';}});})();
 document.querySelectorAll('.yr').forEach(function(e){e.textContent=new Date().getFullYear()});</script>
+<script>
+(function(){
+  var sel = '.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice';
+  var els = [].slice.call(document.querySelectorAll(sel));
+  var groups = new Map();
+  els.forEach(function(el){ var p = el.parentElement, n = groups.get(p) || 0; el.style.setProperty('--d', Math.min(n, 5) * 0.09 + 's'); groups.set(p, n + 1); });
+  if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('in'); }); }
+  else {
+    var io = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+    els.forEach(function(e){ io.observe(e); });
+  }
+  var h = document.querySelector('.site-header');
+  function onScroll(){ if (h) h.classList.toggle('scrolled', window.scrollY > 10); }
+  addEventListener('scroll', onScroll, { passive:true }); onScroll();
+  var links = [].slice.call(document.querySelectorAll('.menu a[href^="#"]:not(.btn)'));
+  if (links.length && 'IntersectionObserver' in window) {
+    var so = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if (en.isIntersecting) { links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); }); } }); }, { rootMargin:'-45% 0px -50% 0px' });
+    links.forEach(function(a){ var t = document.querySelector(a.getAttribute('href')); if (t) so.observe(t); });
+  }
+})();
+</script>
 </body>
 </html>

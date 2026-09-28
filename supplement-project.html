@@ -7,7 +7,7 @@
   <meta name="description" content="Case study: an Excel sales and inventory analytics dashboard with Python data cleaning, a fact/dimension model and demand forecasting.">
   <title>Global supplement sales & inventory analytics — Bhavik Sathvara</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1824'/%3E%3Cpath d='M12 45h9V30h-9zm15 0h9V19h-9zm15 0h9V11h-9z' fill='%23cbf268'/%3E%3C/svg%3E">
-  <style>
+  <script>document.documentElement.classList.add('js')</script><style>
 :root { color-scheme: dark; --ink:#0a1824; --panel:#102533; --line:#35505a; --text:#f4f6ed; --muted:#bac7c8; --accent:#cbf268; }
 * { box-sizing:border-box; }
 body { margin:0; background:var(--ink); color:var(--text); font: 400 1rem/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
@@ -102,11 +102,63 @@ a { color:inherit; } :focus-visible { outline:3px solid var(--accent); outline-o
   .menu a { border-bottom:1px solid #22404b; font-size:1rem; }
   .menu .btn { margin-top:.9rem; border-bottom:0; }
 }
-footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap} footer .brand{color:var(--text);font-size:1.1rem} footer nav{display:flex;gap:1.3rem} footer nav a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-size:.88rem;color:var(--muted)} footer nav a:hover{color:var(--accent)} .menu{text-decoration:none}</style>
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap} footer .brand{color:var(--text);font-size:1.1rem} footer nav{display:flex;gap:1.3rem} footer nav a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-size:.88rem;color:var(--muted)} footer nav a:hover{color:var(--accent)} .menu{text-decoration:none}
+/* ---- smooth motion & polish ---- */
+:root { --r:14px; --ease:cubic-bezier(.22,.61,.36,1); }
+.skill-card, .project, .trait, .card-box, .form-panel, .links a, .chart, .notice, .status-pill, .facts { border-radius:var(--r); }
+.project { overflow:hidden; }
+.trait .ic, .skill-card .ic, .project-top .ic, .links .ic { border-radius:12px; }
+.btn, .toggle { border-radius:10px; }
+.field input, .field select, .field textarea { border-radius:10px; transition:border-color .25s var(--ease), box-shadow .25s var(--ease); }
+.field input:focus, .field select:focus, .field textarea:focus { box-shadow:0 0 0 4px rgba(203,242,104,.15); }
+.submit { border-radius:10px; transition:transform .25s var(--ease), background .25s var(--ease), box-shadow .25s var(--ease); }
+.submit:hover { transform:translateY(-2px); box-shadow:0 10px 24px -10px rgba(203,242,104,.6); }
+a, .menu a, footer nav a { transition:color .25s var(--ease); }
+.btn { transition:transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease); }
+.btn:hover { transform:translateY(-2px); box-shadow:0 12px 28px -12px rgba(203,242,104,.55); }
+.btn.ghost:hover { box-shadow:none; }
+.skill-card, .project, .trait, .card-box, .links a { transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease); }
+.skill-card:hover, .project:hover, .card-box:hover, .links a:hover { transform:translateY(-6px); border-color:rgba(203,242,104,.55); box-shadow:0 22px 44px -24px rgba(0,0,0,.8), 0 0 0 1px rgba(203,242,104,.12); }
+.trait:hover { transform:translateX(6px); border-color:rgba(203,242,104,.55); }
+.skill-card .ic, .project-top .ic, .trait .ic { transition:transform .35s var(--ease); }
+.skill-card:hover .ic, .project:hover .project-top .ic, .trait:hover .ic { transform:scale(1.08) rotate(-4deg); }
+.tags span { transition:border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease); }
+.tags span:hover { border-color:var(--accent); color:var(--accent); background:rgba(203,242,104,.06); }
+.project-foot a { transition:color .25s var(--ease), gap .25s var(--ease); }
+/* header: shadow once you scroll, underline slides in on the section you're viewing */
+.site-header { transition:box-shadow .3s var(--ease), background .3s var(--ease); }
+.site-header.scrolled { box-shadow:0 10px 30px -18px rgba(0,0,0,.9); background:rgba(10,24,36,.97); }
+.menu a:not(.btn) { position:relative; }
+.menu a:not(.btn)::after { content:""; position:absolute; left:0; right:0; bottom:8px; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease); }
+.menu a:not(.btn):hover::after, .menu a.active::after { transform:scaleX(1); }
+.menu a.active { color:var(--text); }
+@media (max-width:760px) { .menu a:not(.btn)::after { display:none; } .menu { transition:opacity .25s var(--ease); } }
+/* hero glow and pulsing status dot */
+.hero { position:relative; }
+.hero::before { content:""; position:absolute; z-index:-1; width:620px; height:620px; left:-220px; top:-160px; background:radial-gradient(circle, rgba(203,242,104,.10), transparent 62%); pointer-events:none; }
+html, body { overflow-x:clip; }
+.status-pill i { animation:pulse 2.2s ease-out infinite; }
+@keyframes pulse { 0% { box-shadow:0 0 0 0 rgba(203,242,104,.55); } 70% { box-shadow:0 0 0 10px rgba(203,242,104,0); } 100% { box-shadow:0 0 0 0 rgba(203,242,104,0); } }
+.mini-chart i { transform-origin:bottom; }
+.js .mini-chart i { animation:grow .9s var(--ease) both; }
+.mini-chart i:nth-child(2){animation-delay:.08s}.mini-chart i:nth-child(3){animation-delay:.16s}.mini-chart i:nth-child(4){animation-delay:.24s}.mini-chart i:nth-child(5){animation-delay:.32s}.mini-chart i:nth-child(6){animation-delay:.4s}.mini-chart i:nth-child(7){animation-delay:.48s}
+@keyframes grow { from { transform:scaleY(0); } to { transform:scaleY(1); } }
+/* reveal on scroll */
+.js :is(.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice):not(.in) { opacity:0; transform:translateY(26px); }
+.js :is(.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice) { transition:opacity .8s var(--ease) var(--d,0s), transform .8s var(--ease) var(--d,0s), border-color .35s var(--ease), box-shadow .35s var(--ease); }
+/* proficiency + chart bars fill when visible */
+.prof-track i, .bar .fill { transform-origin:left; transition:transform 1.3s var(--ease) var(--d,0s); }
+.js .card-box:not(.in) .prof-track i, .js .chart:not(.in) .bar .fill { transform:scaleX(0); }
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation:none !important; transition:none !important; }
+  .js :is(.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice):not(.in) { opacity:1; transform:none; }
+  .js .card-box:not(.in) .prof-track i, .js .chart:not(.in) .bar .fill { transform:none; }
+}
+</style>
 </head>
 <body>
   <header class="site-header"><div class="wrap nav">
-  <a class="brand" href="index.html">Bhavik Sathvara<span>.</span></a>
+  <a class="brand" href="index.html">Bhavik Sathvara</a>
   <button class="toggle" aria-expanded="false" aria-controls="menu">Menu</button>
   <nav class="menu" id="menu" aria-label="Main navigation">
     <a href="index.html#about">About</a><a href="index.html#skills">Skills</a><a href="index.html#projects">Projects</a><a href="index.html#contact">Contact</a>
@@ -138,12 +190,33 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
     <section class="block"><h2>What I’d improve next</h2><ul><li>Add a trend adjustment on top of the seasonal-naive forecast</li><li>Model supplier lead-time variability and a demand-based safety stock formula</li><li>Add native PivotTables and slicers built in desktop Excel</li><li>Build a Power BI or Streamlit view of the same data</li></ul></section>
     <section class="block"><h2>Tools</h2><div class="tags"><span>Excel</span><span>SUMIFS & COUNTIFS</span><span>Excel Tables</span><span>Data validation</span><span>Conditional formatting</span><span>VBA</span><span>Python</span><span>pandas</span><span>NumPy</span><span>openpyxl</span><span>Forecasting</span></div></section>
 
-    <div class="next"><p>Next project</p><a href="healthcare-project.html">Healthcare demand forecasting →</a></div>
+    <div class="next"><p>Next project</p><a href="helmet-detection-project.html">Real-time helmet detection →</a></div>
   </main>
-  <footer><div class="wrap"><a class="brand" href="index.html">Bhavik Sathvara<span>.</span></a><span>© <span class="yr">2026</span> Bhavik Sathvara · Data Analyst</span>
+  <footer><div class="wrap"><a class="brand" href="index.html">Bhavik Sathvara</a><span>© <span class="yr">2026</span> Bhavik Sathvara · Data Analyst</span>
 <nav aria-label="Profiles"><a href="https://www.linkedin.com/in/bhavik-sathvara/" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/bhavikdata" rel="noopener noreferrer">GitHub</a><a href="mailto:bsathvara09@gmail.com">Email</a></nav></div></footer><script>(function(){var b=document.querySelector('.toggle'),m=document.getElementById('menu');if(!b)return;
 b.addEventListener('click',function(){var o=m.classList.toggle('open');b.setAttribute('aria-expanded',o);b.textContent=o?'Close':'Menu';});
 m.addEventListener('click',function(e){if(e.target.closest('a')){m.classList.remove('open');b.setAttribute('aria-expanded','false');b.textContent='Menu';}});})();
 document.querySelectorAll('.yr').forEach(function(e){e.textContent=new Date().getFullYear()});</script>
+<script>
+(function(){
+  var sel = '.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice';
+  var els = [].slice.call(document.querySelectorAll(sel));
+  var groups = new Map();
+  els.forEach(function(el){ var p = el.parentElement, n = groups.get(p) || 0; el.style.setProperty('--d', Math.min(n, 5) * 0.09 + 's'); groups.set(p, n + 1); });
+  if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('in'); }); }
+  else {
+    var io = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+    els.forEach(function(e){ io.observe(e); });
+  }
+  var h = document.querySelector('.site-header');
+  function onScroll(){ if (h) h.classList.toggle('scrolled', window.scrollY > 10); }
+  addEventListener('scroll', onScroll, { passive:true }); onScroll();
+  var links = [].slice.call(document.querySelectorAll('.menu a[href^="#"]:not(.btn)'));
+  if (links.length && 'IntersectionObserver' in window) {
+    var so = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if (en.isIntersecting) { links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); }); } }); }, { rootMargin:'-45% 0px -50% 0px' });
+    links.forEach(function(a){ var t = document.querySelector(a.getAttribute('href')); if (t) so.observe(t); });
+  }
+})();
+</script>
 </body>
 </html>
