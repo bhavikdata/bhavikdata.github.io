@@ -105,6 +105,15 @@ a { color:inherit; } :focus-visible { outline:3px solid var(--accent); outline-o
 .prof-row span:last-child { color:var(--accent); font-weight:700; font-variant-numeric:tabular-nums; }
 .prof-track { height:8px; background:var(--ink); border:1px solid var(--line); border-radius:100px; overflow:hidden; }
 .prof-track i { display:block; height:100%; background:var(--accent); border-radius:100px; }
+.card-sub { color:var(--muted); font-size:.9rem; margin:-.8rem 0 1rem; }
+.proof { list-style:none; margin:0; padding:0; }
+.proof li { display:grid; grid-template-columns:minmax(9rem,.8fr) 1.2fr; align-items:center; gap:.5rem 1rem; padding:.7rem 0; border-bottom:1px solid #22404b; }
+.proof li:last-child { border-bottom:0; padding-bottom:0; }
+.proof .skill { font-weight:600; font-size:.95rem; }
+.proof .uses { display:flex; flex-wrap:wrap; gap:.4rem; }
+@media (max-width:480px){ .proof li { grid-template-columns:1fr; } }
+.proof .uses a { font-size:.8rem; text-decoration:none; color:var(--accent); border:1px solid rgba(203,242,104,.35); border-radius:100px; padding:.25rem .65rem; min-height:32px; display:inline-flex; align-items:center; transition:background .25s, border-color .25s; }
+.proof .uses a:hover { background:rgba(203,242,104,.1); border-color:var(--accent); }
 .tags.ind span { font-size:.9rem; padding:.4rem .8rem; }
 .emoji { font-size:1.45rem; line-height:1; }
 .skill-card .ic { width:52px; height:52px; display:grid; place-items:center; background:var(--ink); border:1px solid var(--line); }
@@ -211,6 +220,18 @@ html, body { overflow-x:clip; }
   .js :is(.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice):not(.in) { opacity:1; transform:none; }
   .js .card-box:not(.in) .prof-track i, .js .chart:not(.in) .bar .fill { transform:none; }
 }
+
+/* custom small-circle cursor (mouse and trackpad only) */
+.cursor-dot { position:fixed; left:0; top:0; width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%; background:var(--accent); pointer-events:none; z-index:9999; opacity:0; mix-blend-mode:difference; transition:width .25s cubic-bezier(.22,.61,.36,1), height .25s cubic-bezier(.22,.61,.36,1), margin .25s cubic-bezier(.22,.61,.36,1), background .25s, border-color .25s, opacity .2s; will-change:transform; }
+.cursor-dot.show { opacity:1; }
+.cursor-dot.hover { width:40px; height:40px; margin:-20px 0 0 -20px; background:rgba(203,242,104,.12); border:1.5px solid var(--accent); }
+.cursor-dot.down { width:9px; height:9px; margin:-4.5px 0 0 -4.5px; }
+.cursor-dot.hide { opacity:0; }
+@media (hover:hover) and (pointer:fine) {
+  html.has-cursor, html.has-cursor * { cursor:none !important; }
+  html.has-cursor input, html.has-cursor textarea, html.has-cursor select { cursor:text !important; }
+  html.has-cursor select { cursor:pointer !important; }
+}
 </style>
 </head>
 <body>
@@ -262,7 +283,7 @@ html, body { overflow-x:clip; }
       <div class="traits"><div class="trait"><div class="ic"><span class="emoji" aria-hidden="true">🎯</span></div><div><h3>Business question first</h3><p>Every project starts from the decision someone needs to make, not just the data.</p></div></div><div class="trait"><div class="ic"><span class="emoji" aria-hidden="true">🔍</span></div><div><h3>Numbers you can trace</h3><p>Every figure shows how it was calculated, and limitations are stated, not hidden.</p></div></div><div class="trait"><div class="ic"><span class="emoji" aria-hidden="true">🔁</span></div><div><h3>Reproducible work</h3><p>Tested pipelines, fixed random seeds and documented steps, so results can be rerun.</p></div></div></div>
     </div>
     <div class="about-side">
-      <div class="card-box"><h3>Core proficiency</h3><div class="prof"><div class="prof-row"><span>SQL</span><span>90%</span></div><div class="prof-track" role="img" aria-label="SQL: 90%"><i style="width:90%"></i></div></div><div class="prof"><div class="prof-row"><span>Python &amp; pandas</span><span>85%</span></div><div class="prof-track" role="img" aria-label="Python &amp; pandas: 85%"><i style="width:85%"></i></div></div><div class="prof"><div class="prof-row"><span>Power BI / Tableau</span><span>90%</span></div><div class="prof-track" role="img" aria-label="Power BI / Tableau: 90%"><i style="width:90%"></i></div></div><div class="prof"><div class="prof-row"><span>Excel &amp; data cleaning</span><span>90%</span></div><div class="prof-track" role="img" aria-label="Excel &amp; data cleaning: 90%"><i style="width:90%"></i></div></div><div class="prof"><div class="prof-row"><span>Snowflake &amp; Azure</span><span>80%</span></div><div class="prof-track" role="img" aria-label="Snowflake &amp; Azure: 80%"><i style="width:80%"></i></div></div><div class="prof"><div class="prof-row"><span>Machine learning &amp; forecasting</span><span>80%</span></div><div class="prof-track" role="img" aria-label="Machine learning &amp; forecasting: 80%"><i style="width:80%"></i></div></div></div>
+      <div class="card-box"><h3>Skills in action</h3><p class="card-sub">Where each skill is used in my projects.</p><ul class="proof"><li><span class="skill">SQL</span><span class="uses"><a href="healthcare-project.html">Healthcare</a><a href="access-project.html">Access control</a></span></li><li><span class="skill">Python &amp; pandas</span><span class="uses"><a href="healthcare-project.html">Healthcare</a><a href="supplement-project.html">Supplement</a><a href="access-project.html">Access control</a></span></li><li><span class="skill">Power BI &amp; DAX</span><span class="uses"><a href="access-project.html">Access control</a><a href="healthcare-project.html">Healthcare</a></span></li><li><span class="skill">Excel</span><span class="uses"><a href="supplement-project.html">Supplement</a></span></li><li><span class="skill">Machine learning &amp; forecasting</span><span class="uses"><a href="healthcare-project.html">Healthcare</a><a href="supplement-project.html">Supplement</a><a href="helmet-detection-project.html">Helmet detection</a></span></li><li><span class="skill">Computer vision</span><span class="uses"><a href="helmet-detection-project.html">Helmet detection</a></span></li><li><span class="skill">Snowflake &amp; Azure</span><span class="uses"><a href="healthcare-project.html">Healthcare</a></span></li></ul></div>
       <div class="card-box"><h3>Industries worked in</h3><div class="tags ind"><span>🏥 Healthcare</span><span>💻 Software</span><span>📡 Technology</span><span>📦 Retail &amp; supply chain</span><span>🛡️ Security operations</span></div></div>
     </div>
   </div>
@@ -359,6 +380,24 @@ document.querySelectorAll('.yr').forEach(function(e){e.textContent=new Date().ge
     var so = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if (en.isIntersecting) { links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); }); } }); }, { rootMargin:'-45% 0px -50% 0px' });
     links.forEach(function(a){ var t = document.querySelector(a.getAttribute('href')); if (t) so.observe(t); });
   }
+})();
+</script><script>
+(function(){
+  if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  var d = document.createElement('div'); d.className = 'cursor-dot'; d.setAttribute('aria-hidden','true');
+  document.body.appendChild(d); document.documentElement.classList.add('has-cursor');
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var x = -100, y = -100, cx = x, cy = y;
+  addEventListener('mousemove', function(e){ x = e.clientX; y = e.clientY; if (!d.classList.contains('show')) { cx = x; cy = y; } d.classList.add('show');
+    var t = e.target.closest ? e.target : null;
+    d.classList.toggle('hide', !!(t && t.closest('input, textarea, select')));
+    d.classList.toggle('hover', !!(t && t.closest('a, button, .skill-card, .project, .check, [role=button]')));
+  }, { passive:true });
+  document.addEventListener('mouseleave', function(){ d.classList.remove('show'); });
+  addEventListener('mousedown', function(){ d.classList.add('down'); });
+  addEventListener('mouseup', function(){ d.classList.remove('down'); });
+  (function loop(){ cx += (x - cx) * (still ? 1 : 0.25); cy += (y - cy) * (still ? 1 : 0.25);
+    d.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)'; requestAnimationFrame(loop); })();
 })();
 </script>
 </body>

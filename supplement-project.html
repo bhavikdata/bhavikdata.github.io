@@ -154,6 +154,18 @@ html, body { overflow-x:clip; }
   .js :is(.viewer, .table-wrap, .diagram-fig, .check, .section-head, .skill-card, .project, .trait, .card-box, .form-panel, .side, .hero > div, .block, .chart, .facts, .notice):not(.in) { opacity:1; transform:none; }
   .js .card-box:not(.in) .prof-track i, .js .chart:not(.in) .bar .fill { transform:none; }
 }
+
+/* custom small-circle cursor (mouse and trackpad only) */
+.cursor-dot { position:fixed; left:0; top:0; width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%; background:var(--accent); pointer-events:none; z-index:9999; opacity:0; mix-blend-mode:difference; transition:width .25s cubic-bezier(.22,.61,.36,1), height .25s cubic-bezier(.22,.61,.36,1), margin .25s cubic-bezier(.22,.61,.36,1), background .25s, border-color .25s, opacity .2s; will-change:transform; }
+.cursor-dot.show { opacity:1; }
+.cursor-dot.hover { width:40px; height:40px; margin:-20px 0 0 -20px; background:rgba(203,242,104,.12); border:1.5px solid var(--accent); }
+.cursor-dot.down { width:9px; height:9px; margin:-4.5px 0 0 -4.5px; }
+.cursor-dot.hide { opacity:0; }
+@media (hover:hover) and (pointer:fine) {
+  html.has-cursor, html.has-cursor * { cursor:none !important; }
+  html.has-cursor input, html.has-cursor textarea, html.has-cursor select { cursor:text !important; }
+  html.has-cursor select { cursor:pointer !important; }
+}
 </style>
 </head>
 <body>
@@ -216,6 +228,24 @@ document.querySelectorAll('.yr').forEach(function(e){e.textContent=new Date().ge
     var so = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if (en.isIntersecting) { links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); }); } }); }, { rootMargin:'-45% 0px -50% 0px' });
     links.forEach(function(a){ var t = document.querySelector(a.getAttribute('href')); if (t) so.observe(t); });
   }
+})();
+</script><script>
+(function(){
+  if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  var d = document.createElement('div'); d.className = 'cursor-dot'; d.setAttribute('aria-hidden','true');
+  document.body.appendChild(d); document.documentElement.classList.add('has-cursor');
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var x = -100, y = -100, cx = x, cy = y;
+  addEventListener('mousemove', function(e){ x = e.clientX; y = e.clientY; if (!d.classList.contains('show')) { cx = x; cy = y; } d.classList.add('show');
+    var t = e.target.closest ? e.target : null;
+    d.classList.toggle('hide', !!(t && t.closest('input, textarea, select')));
+    d.classList.toggle('hover', !!(t && t.closest('a, button, .skill-card, .project, .check, [role=button]')));
+  }, { passive:true });
+  document.addEventListener('mouseleave', function(){ d.classList.remove('show'); });
+  addEventListener('mousedown', function(){ d.classList.add('down'); });
+  addEventListener('mouseup', function(){ d.classList.remove('down'); });
+  (function loop(){ cx += (x - cx) * (still ? 1 : 0.25); cy += (y - cy) * (still ? 1 : 0.25);
+    d.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)'; requestAnimationFrame(loop); })();
 })();
 </script>
 </body>
